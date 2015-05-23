@@ -30,10 +30,5 @@
 			<type>2</type>
 			<location>D:/agony/agony2d-ui/source/src</location>
 		</link>
-		<link>
-			<name>src</name>
-			<type>2</type>
-			<location>D:/agony/英语视频白板source/source</location>
-		</link>
 	</linkedResources>
 </projectDescription>
