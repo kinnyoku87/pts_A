@@ -83,7 +83,7 @@ package test
 			// 这个client不加会报错！！待解..
 			this.client = new Object;
 			ns_A.client = this.client;
-			ns_A.play("AAA");
+			ns_A.play("mp4:AAA.f4v");
 			this.video_A = new Video(320, 240);
 			this.addChild(this.video_A);
 			//this.video_A

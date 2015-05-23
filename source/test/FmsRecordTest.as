@@ -83,7 +83,7 @@ package test
 			camera_A.setQuality(0, 80);
 			this.ns_A.attachCamera(camera_A);
 			
-			this.ns_A.publish("AAA", "record");
+			this.ns_A.publish("mp4:AAA.f4v", "append");
 			
 		}
 		
