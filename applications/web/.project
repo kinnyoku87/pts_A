@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>派特森英语教学应用web</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>[source path] agony2d-core-source-src</name>
+			<type>2</type>
+			<location>D:/agony/agony2d-core/source/src</location>
+		</link>
+		<link>
+			<name>[source path] agony2d-display-v1.1.6-source-src</name>
+			<type>2</type>
+			<location>D:/agony/agony2d-display-v1.1.6/source/src</location>
+		</link>
+		<link>
+			<name>[source path] agony2d-ui-source-src</name>
+			<type>2</type>
+			<location>D:/agony/agony2d-ui/source/src</location>
+		</link>
+		<link>
+			<name>src</name>
+			<type>2</type>
+			<location>D:/agony/英语视频白板source/source</location>
+		</link>
+	</linkedResources>
+</projectDescription>
