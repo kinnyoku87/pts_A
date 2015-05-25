@@ -1,4 +1,4 @@
-package views.UU {
+package views.UU.startup {
 	import org.agony2d.flashApi.StateUU;
 	
 public class Startup_StateUU extends StateUU {

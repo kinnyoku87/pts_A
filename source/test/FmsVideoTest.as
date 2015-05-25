@@ -84,6 +84,7 @@ package test
 			this.client = new Object;
 			ns_A.client = this.client;
 			ns_A.play("mp4:AAA.f4v");
+			//ns_A.play("raw:AAA");
 			this.video_A = new Video(320, 240);
 			this.addChild(this.video_A);
 			//this.video_A
