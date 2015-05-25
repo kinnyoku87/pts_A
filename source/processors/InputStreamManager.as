@@ -26,7 +26,7 @@ public class InputStreamManager
 		if (!_nsA) {
 			_nsA = new NetStream(ConnectManager.getInstance().getNetConnect());
 			_nsA.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus_ns);
-			_nsA.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
+			_nsA.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onNsEvent);
 			
 			_client = new Object;
 			_nsA.client = _client;
