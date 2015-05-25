@@ -1,4 +1,5 @@
 package views.UU.startup {
+	import models.drawing.DrawingManager;
 	import org.agony2d.events.AEvent;
 	import org.agony2d.flashApi.StateUU;
 	import org.agony2d.flashApi.UUFacade;
@@ -59,7 +60,9 @@ public class InitRes_StateUU extends StateUU {
 		// progressBar...A
 		this.resA.addBundle(new FilesBundle("temp/progressBar/01.png", "temp/progressBar/02.png","temp/progressBar/03.png"), new Scale9UU_BundleHandler, new ProgressBarUU_BundleHandler("A", 1));
 		
-												
+		// brush
+		this.resA.addBundle(new ZipBundle("drawing.zip"), new TextureUU_BundleHandler);
+		
 		this.resA.addEventListener(AEvent.COMPLETE, onComplete);
 	}
 	
@@ -70,6 +73,7 @@ public class InitRes_StateUU extends StateUU {
 		
 		this.getRoot().closeAllViews();
 		
+		DrawingManager.getInstance().initialize();
 		
 		this.getRoot().getView(this.getArg(0)).activate();
 	}

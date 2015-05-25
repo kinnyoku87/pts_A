@@ -1,14 +1,16 @@
 package views.UU.room {
+	import org.agony2d.flashApi.ImageLoaderUU;
+	import org.agony2d.flashApi.MultiStateUU;
 	import org.agony2d.flashApi.StateUU;
 	
-public class TeacherRoom_StateUU extends StateUU {
+public class TeacherRoom_StateUU extends MultiStateUU {
 	
-	public function TeacherRoom_StateUU() {
+	override public function onEnter() : void {
 		
 		
 		
+		this.combine(TeacherBoard_StateUU);
 	}
-	
 	
 }
 }

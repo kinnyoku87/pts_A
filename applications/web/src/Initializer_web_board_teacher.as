@@ -2,6 +2,7 @@ package {
 	import flash.display.Stage;
 	import flash.ui.Keyboard;
 	import org.agony2d.crossing.Adapter;
+	import org.agony2d.flashApi.RootUU;
 	import views.UU.room.TeacherRoom_StateUU;
 	import views.UU.startup.InitRes_StateUU;
 	import views.UU.startup.Startup_StateUU;
@@ -22,6 +23,7 @@ package {
 public class Initializer_web_board_teacher implements IInitializer {
 	
 	private var _adapter:Adapter;
+	private var _rootUU:RootUU;
 	
 	public function onInit( stage:Stage ) : void {
 		//stage.addChild(new Stats(0, 20));
@@ -38,7 +40,10 @@ public class Initializer_web_board_teacher implements IInitializer {
 		UUFacade.registerView("initRes", InitRes_StateUU);
 		UUFacade.registerView("room",    TeacherRoom_StateUU);
 		
-		UUFacade.createRoot(this._adapter).getView("initRes").activate(["startup"]);
+		_rootUU = UUFacade.createRoot(this._adapter);
+		
+		_rootUU.getView("startup").activate();
+		_rootUU.getView("initRes").activate(["room"]);
 		
 		this._adapter.getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, ____onKeyboardForDebug);
 	}
