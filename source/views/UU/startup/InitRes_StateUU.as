@@ -69,13 +69,17 @@ public class InitRes_StateUU extends StateUU {
 	public var resA:ResMachine;
 	
 	private function onComplete(e:AEvent):void {
+		var i:int;
+		
 		this.resA.removeAllListeners();
 		
 		this.getRoot().closeAllViews();
 		
 		DrawingManager.getInstance().initialize();
 		
-		this.getRoot().getView(this.getArg(0)).activate();
+		while (i < this.numArgs) {
+			this.getRoot().getView(this.getArg(i++)).activate();
+		}
 	}
 }
 }
