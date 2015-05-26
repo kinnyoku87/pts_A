@@ -12,6 +12,7 @@ package {
 	import org.agony2d.resource.ResMachine;
 	import org.agony2d.utils.gc;
 	import processors.ConnectManager;
+	import views.ConfigV;
 	import views.UU.room.*;
 	import views.UU.startup.InitRes_StateUU;
 	import views.UU.startup.Startup_StateUU;
@@ -31,7 +32,9 @@ public class Initializer_web_board_student implements IInitializer {
 		UUFacade.registerView("initRes", InitRes_StateUU);
 		// room
 		UUFacade.registerView("board",   StudentBoard_StateUU);
-		UUFacade.registerView("video",   StudentVideo_StateUU);
+		if (ConfigV.videoEnabled) {
+			UUFacade.registerView("video",   StudentVideo_StateUU);
+		}
 		
 		_rootUU = UUFacade.createRoot(this._adapter);
 		
@@ -40,10 +43,18 @@ public class Initializer_web_board_student implements IInitializer {
 	}
 	
 	private function onConnected(e:AEvent):void {
+		var viewIdList:Array;
+		
 		ConnectManager.getInstance().removeEventListener(AEvent.COMPLETE, onConnected);
 		
 		_rootUU.getView("startup").activate();
-		_rootUU.getView("initRes").activate(["board", "video"]);
+		
+		viewIdList = [];
+		viewIdList.push("board");
+		if (ConfigV.videoEnabled) {
+			viewIdList.push("video");
+		}
+		_rootUU.getView("initRes").activate(viewIdList);
 	}
 	
 	

@@ -13,6 +13,8 @@ package views.UU.room {
 	import org.agony2d.flashApi.MultiStateUU;
 	import org.agony2d.flashApi.textures.TextureUU;
 	import org.agony2d.flashApi.UUFacade;
+	import processors.ARemoteSharedObject;
+	import processors.RemoteManager;
 	
 public class TeacherBoard_StateUU extends StateUU {
 	
@@ -55,6 +57,18 @@ public class TeacherBoard_StateUU extends StateUU {
 	private function ____onMove(e:ATouchEvent):void {
 		if (e.touch.isPressed()) {
 			this.paper.drawLine(e.touch.rootX, e.touch.rootY, e.touch.prevRootX, e.touch.prevRootY);
+			
+			
+			var remote:ARemoteSharedObject;
+			
+			remote = RemoteManager.getInstance().getDrawing();
+			if (remote.getData()["A"] == null) {
+				remote.getData()["A"] = 1;
+			}
+			else {
+				remote.getData()["A"] += 1;
+			}
+			remote.setDirty("A");
 		}
 	}
 	

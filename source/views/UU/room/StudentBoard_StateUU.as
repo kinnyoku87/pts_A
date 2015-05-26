@@ -1,4 +1,5 @@
 package views.UU.room {
+	import events.ASyncEvent;
 	import flash.ui.Keyboard;
 	import models.drawing.CommonPaper;
 	import models.drawing.DrawingManager;
@@ -13,12 +14,17 @@ package views.UU.room {
 	import org.agony2d.flashApi.MultiStateUU;
 	import org.agony2d.flashApi.textures.TextureUU;
 	import org.agony2d.flashApi.UUFacade;
+	import processors.ARemoteSharedObject;
+	import processors.RemoteManager;
 	
 public class StudentBoard_StateUU extends StateUU {
 	
 	override public function onEnter() :void {
 		var textureUU:TextureUU;
 		var BA:BitmapData;
+		
+		_drawingRemote = RemoteManager.getInstance().getDrawing();
+		_drawingRemote.addEventListener(ASyncEvent.SYNC, onSync);
 		
 		this.paper = DrawingManager.getInstance().paper;
 		//this.paper.currBrush.color = 0x0;
@@ -55,7 +61,16 @@ public class StudentBoard_StateUU extends StateUU {
 	private function ____onMove(e:ATouchEvent):void {
 		if (e.touch.isPressed()) {
 			this.paper.drawLine(e.touch.rootX, e.touch.rootY, e.touch.prevRootX, e.touch.prevRootY);
+			
+			
+			
 		}
+	}
+	
+	private var _drawingRemote:ARemoteSharedObject;
+	
+	private function onSync(e:ASyncEvent):void {
+		trace(_drawingRemote.getData()["A"]);
 	}
 	
 	private function ____onRelease(e:ATouchEvent):void {
