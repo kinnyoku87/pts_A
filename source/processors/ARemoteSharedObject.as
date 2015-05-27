@@ -32,7 +32,7 @@ package processors
 		}
 		
 		public function setDirty( propertyName:String ) : void {
-			if (_dirtyMap[propertyName]) {
+			if (_dirtyMap[propertyName] || !_syncCompleted) {
 				return;
 			}
 			_dirtyMap[propertyName] = propertyName;
@@ -46,7 +46,7 @@ package processors
 		private var _sharedObject:SharedObject;
 		private var _isPostUpdating:Boolean;
 		private var _dirtyMap:Object = [];
-		
+		private var _syncCompleted:Boolean = true;
 		
 		
 		private function ____doAddToPostUpdateList() : void {
@@ -73,10 +73,13 @@ package processors
 		}
 		
 		private function onSync(e:SyncEvent):void {
+			_syncCompleted = true;
+			
 			_syncEvent.changeList = e.changeList;
 			this.dispatchEvent(_syncEvent);
 			
 			//trace("change");
+			
 		}
 	}
 }

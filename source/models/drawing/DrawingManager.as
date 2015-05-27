@@ -43,8 +43,8 @@ public class DrawingManager
 		
 		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/waterColor.png", TextureUU) as TextureUU).getBitmapData()], 0, 5,0,0,true);
 		
-		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/pencil.png", TextureUU) as TextureUU).getBitmapData()], 1, 3,0,0,true)
-		brush.scale = 0.80;
+		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/pencil.png", TextureUU) as TextureUU).getBitmapData()], 1, 2,0,0,true)
+		brush.scale = 0.7;
 		
 		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/crayon.png", TextureUU) as TextureUU).getBitmapData()], 2, 5,0,0,true)
 		brush = paper.createCopyPixelsBrush((UUFacade.getAsset("drawing/brush/pink.png", TextureUU) as TextureUU).getBitmapData(), 3, 3)
@@ -54,7 +54,7 @@ public class DrawingManager
 		brush = paper.createEraseBrush(eraser, 5, 8)
 		brush.scale = 1.5;
 		
-		paper.brushIndex = 0;
+		paper.brushIndex = 1;
 	}
 	
 	

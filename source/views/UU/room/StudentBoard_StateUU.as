@@ -3,6 +3,7 @@ package views.UU.room {
 	import flash.ui.Keyboard;
 	import models.drawing.CommonPaper;
 	import models.drawing.DrawingManager;
+	import models.drawing.DrawingPlayer2;
 	import models.drawing.IBrush;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
@@ -41,15 +42,17 @@ public class StudentBoard_StateUU extends StateUU {
 		this.getFusion().addNode(_imageA);
 		_imageA.textureId = "currWhiteBoard";
 		
-		this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.PRESS,   ____onPress, 100000);
-		this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.MOVE,    ____onMove, 100000);
-		this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.RELEASE, ____onRelease, 100000);
+		_player = new DrawingPlayer2(paper);
+		//this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.PRESS,   ____onPress, 100000);
+		//this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.MOVE,    ____onMove, 100000);
+		//this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.RELEASE, ____onRelease, 100000);
 		
-		this.getRoot().getAdapter().getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, onKeyDown);
+		//this.getRoot().getAdapter().getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, onKeyDown);
 	}
 	
 	
 	public var paper:CommonPaper;
+	private var _player:DrawingPlayer2;
 	
 	private var _imageLoader:ImageLoaderUU;
 	private var _imageA:ImageUU;
@@ -71,7 +74,15 @@ public class StudentBoard_StateUU extends StateUU {
 	private var _drawingRemote:ARemoteSharedObject;
 	
 	private function onSync(e:ASyncEvent):void {
-		Agony.getLog().simplify(_drawingRemote.getData()["A"]);
+		var AY:Array;
+		
+		if (!_drawingRemote.getData()["A"]) {
+			return;
+		}
+		AY = _drawingRemote.getData()["A"];
+		Agony.getLog().simplify("student: " + AY.length / 12);
+		
+		this._player.drawData(AY);
 	}
 	
 	private function ____onRelease(e:ATouchEvent):void {

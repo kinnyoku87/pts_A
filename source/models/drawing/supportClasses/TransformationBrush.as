@@ -40,7 +40,7 @@ public class TransformationBrush extends BrushBase {
 
 	}
 	
-	final override public function drawLine( currX:Number, currY:Number, prevX:Number, prevY:Number ) : void {
+	override public function drawLine( currX:Number, currY:Number, prevX:Number, prevY:Number ) : void {
 		var distA:Number, tmpX:Number, tmpY:Number
 		var i:int, l:int
 		

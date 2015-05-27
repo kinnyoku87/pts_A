@@ -1,4 +1,5 @@
 package views.UU.room {
+	import events.ASyncEvent;
 	import flash.ui.Keyboard;
 	import flash.utils.ByteArray;
 	import models.drawing.CommonPaper;
@@ -6,6 +7,7 @@ package views.UU.room {
 	import models.drawing.IBrush;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
+	import org.agony2d.Agony;
 	import org.agony2d.events.AEvent;
 	import org.agony2d.events.AKeyboardEvent;
 	import org.agony2d.events.ATouchEvent;
@@ -45,10 +47,13 @@ public class TeacherBoard_StateUU extends StateUU {
 		this.getRoot().getAdapter().getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, onKeyDown);
 		
 		_remoteDrawing = RemoteManager.getInstance().getDrawing();
+		
 		this.getFusion().insertEventListener(_remoteDrawing, AEvent.COMPLETE, onSyncComplete);
 	}
 	
 	private function onSyncComplete(e:AEvent):void {
+		Agony.getLog().simplify("teacher: " + this.paper.getSyncData().length / 12);
+		
 		this.paper.getSyncData().length = 0;
 	}
 	
