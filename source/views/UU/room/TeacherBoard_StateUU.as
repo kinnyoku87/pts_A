@@ -11,6 +11,7 @@ package views.UU.room {
 	import org.agony2d.events.AEvent;
 	import org.agony2d.events.AKeyboardEvent;
 	import org.agony2d.events.ATouchEvent;
+	import org.agony2d.events.TickEvent;
 	import org.agony2d.flashApi.ImageUU;
 	import org.agony2d.flashApi.StateUU;
 	import org.agony2d.flashApi.ImageLoaderUU;
@@ -46,15 +47,24 @@ public class TeacherBoard_StateUU extends StateUU {
 		
 		this.getRoot().getAdapter().getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, onKeyDown);
 		
-		_remoteDrawing = RemoteManager.getInstance().getDrawing();
+		_drawingRemote = RemoteManager.getInstance().getDrawing();
+		_drawingRemote.addEventListener(ASyncEvent.SYNC, onSync);
 		
-		this.getFusion().insertEventListener(_remoteDrawing, AEvent.COMPLETE, onSyncComplete);
+		Agony.getFrame().addEventListener(TickEvent.TICKING, onTicking);
 	}
 	
-	private function onSyncComplete(e:AEvent):void {
-		Agony.getLog().simplify("teacher: " + this.paper.getSyncData().length / 12);
+	private function onSync(e:ASyncEvent):void {
+		//Agony.getLog().simplify("teacher onSyncComplete: " + this.paper.getSyncData().length / 12);
 		
-		this.paper.getSyncData().length = 0;
+		_syncCompleted = true;
+	}
+	
+	private function onTicking(e:TickEvent):void {
+		_currActions = null;
+		
+		if (_syncCompleted) {
+			this.____doFlush();
+		}
 	}
 	
 	
@@ -62,22 +72,51 @@ public class TeacherBoard_StateUU extends StateUU {
 	
 	private var _imageLoader:ImageLoaderUU;
 	private var _imageA:ImageUU;
-	private var _remoteDrawing:ARemoteSharedObject;
+	private var _drawingRemote:ARemoteSharedObject;
 	
+	private var _actionsList:Array = []; // 动作列表
+	private var _currActions:Array; // 当前动作
+	private var _syncCompleted:Boolean = true;
+	
+	
+	
+	
+	private function ____doFlush() : void {
+		var AY:Array;
+		
+		//Agony.getLog().simplify("doFlush: " + _actionsList.length);
+		
+		if (_actionsList.length > 0) {
+			AY = _actionsList.shift();
+			_drawingRemote.getData()["A"] = AY;
+			_drawingRemote.setDirty("A");
+			
+			_syncCompleted = false
+			Agony.getLog().simplify("teacher: " + AY.length / 12);
+		}
+	}
+	
+	private function ____doCheckNewActions() : void {
+		if (!_currActions) {
+			_currActions = [];
+			_actionsList.push(_currActions);
+		}
+		_currActions.push.apply(null, this.paper.getSyncData());
+		this.paper.getSyncData().length = 0;
+	}
 	
 	private function ____onPress(e:ATouchEvent):void {
 		this.paper.startDraw(e.touch.rootX, e.touch.rootY);
 		
-		_remoteDrawing.getData()["A"] = this.paper.getSyncData().concat();
-		_remoteDrawing.setDirty("A");
+		this.____doCheckNewActions();
+		
 	}
 	
 	private function ____onMove(e:ATouchEvent):void {
 		if (e.touch.isPressed()) {
 			this.paper.drawLine(e.touch.rootX, e.touch.rootY, e.touch.prevRootX, e.touch.prevRootY);
 			
-			_remoteDrawing.getData()["A"] = this.paper.getSyncData();
-			_remoteDrawing.setDirty("A");
+			this.____doCheckNewActions();
 		}
 	}
 	

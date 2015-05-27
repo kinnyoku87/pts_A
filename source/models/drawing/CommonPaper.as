@@ -195,6 +195,7 @@ public class CommonPaper extends PaperBase implements ITicker {
 		
 		// [ type, brushIndex, brushType, density, scale, color, alpha, angle, destX, destY ]
 		if (_isSync) {
+			//_syncData.push.apply(null, [0, brushIndex, brushType, m_currBrush.m_density, m_currBrush.m_scale, m_currBrush.m_color, m_currBrush.m_alpha, cachedAngle, destX, destY, 0, 0]);
 			_syncData.push.apply(null, [0, brushIndex, brushType, m_currBrush.m_density, m_currBrush.m_scale, m_currBrush.m_color, m_currBrush.m_alpha, cachedAngle, destX, destY, 0, 0]);
 		}
 	}
