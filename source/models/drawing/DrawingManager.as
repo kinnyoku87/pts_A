@@ -18,6 +18,7 @@ public class DrawingManager
 		BA = new BitmapData(1024, 600, true, 0x0);
 		
 		paper = new CommonPaper(1024, 600, 1.0, BA);
+		paper.isSync(true);
 		
 		textureUU = new TextureUU(paper.content, false);
 		UUFacade.registerAsset("currWhiteBoard", textureUU, "currWhiteBoard");

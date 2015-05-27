@@ -4,13 +4,18 @@ package
 	import org.agony2d.Agony;
 	import org.agony2d.crossing.DesktopPlatform;
 	import org.agony2d.logging.DebugLogger;
+	import org.agony2d.logging.FlashTextLogger;
+	import org.agony2d.logging.ILogger;
 	
 	[SWF(width = "1024", height = "600", frameRate="45", backgroundColor = "0xFFFFFF")]
 	public class Main_web_board_student extends Sprite
 	{
 		public function Main_web_board_student()
 		{
-			Agony.getLog().logger = new DebugLogger();
+			var logger:FlashTextLogger;
+			
+			Agony.getLog().logger = logger = new FlashTextLogger(stage, false, 200, 450, 400);
+			logger.visible = true;
 			Agony.startup(1024, 600, new DesktopPlatform, stage, Initializer_web_board_student);
 		}
 	}

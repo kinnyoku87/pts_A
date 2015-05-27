@@ -9,20 +9,14 @@ package test
 	import flash.media.Microphone;
 	import flash.media.SoundCodec;
 	import flash.media.SoundTransform;
+	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
 	import flash.events.*;
 	
 	public class FmsRecordTest extends Sprite 
 	{
-		public var nc_A:NetConnection;
-		public var ns_A:NetStream;
-		
-		public var mic_A:Microphone;
-		public var camera_A:Camera;
-		
-		public var fmsURL:String = "rtmp://112.74.101.8/agony/a";
-		
+
 		public function FmsRecordTest() 
 		{
 			this.nc_A = new NetConnection;
@@ -32,6 +26,17 @@ package test
 			this.nc_A.connect(fmsURL);
 			
 		}
+		
+		public var nc_A:NetConnection;
+		public var ns_A:NetStream;
+		
+		public var mic_A:Microphone;
+		public var camera_A:Camera;
+		
+		public var fmsURL:String = "rtmp://112.74.101.8/agony/a";
+		
+		public var video_A:Video;
+		
 		
 		private function onIoError(e:Event):void {
 			trace(e.type);
@@ -84,8 +89,16 @@ package test
 			this.ns_A.attachCamera(camera_A);
 			
 			this.ns_A.publish("mp4:AAA.f4v", "live");
-			//this.ns_A.publish("mp4:AAA.f4v", "append");
+			//this.ns_A.publish("mp4:AAA.f4v", "record");
 			
+			video_A = new Video(320, 240);
+			video_A.attachCamera(camera_A);
+			this.addChild(video_A);
+			
+			video_A = new Video(320, 240);
+			video_A.attachCamera(camera_A);
+			this.addChild(video_A);
+			video_A.x = 400;
 		}
 		
 		private function onNetStatus_ns(e:NetStatusEvent):void {

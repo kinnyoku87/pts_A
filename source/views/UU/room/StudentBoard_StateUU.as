@@ -6,6 +6,7 @@ package views.UU.room {
 	import models.drawing.IBrush;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
+	import org.agony2d.Agony;
 	import org.agony2d.events.AKeyboardEvent;
 	import org.agony2d.events.ATouchEvent;
 	import org.agony2d.flashApi.ImageUU;
@@ -70,7 +71,7 @@ public class StudentBoard_StateUU extends StateUU {
 	private var _drawingRemote:ARemoteSharedObject;
 	
 	private function onSync(e:ASyncEvent):void {
-		trace(_drawingRemote.getData()["A"]);
+		Agony.getLog().simplify(_drawingRemote.getData()["A"]);
 	}
 	
 	private function ____onRelease(e:ATouchEvent):void {

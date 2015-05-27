@@ -1,10 +1,12 @@
 package views.UU.room {
 	import flash.ui.Keyboard;
+	import flash.utils.ByteArray;
 	import models.drawing.CommonPaper;
 	import models.drawing.DrawingManager;
 	import models.drawing.IBrush;
 	import flash.display.BitmapData;
 	import flash.display.Shape;
+	import org.agony2d.events.AEvent;
 	import org.agony2d.events.AKeyboardEvent;
 	import org.agony2d.events.ATouchEvent;
 	import org.agony2d.flashApi.ImageUU;
@@ -41,6 +43,13 @@ public class TeacherBoard_StateUU extends StateUU {
 		this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.RELEASE, ____onRelease, 100000);
 		
 		this.getRoot().getAdapter().getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, onKeyDown);
+		
+		_remoteDrawing = RemoteManager.getInstance().getDrawing();
+		this.getFusion().insertEventListener(_remoteDrawing, AEvent.COMPLETE, onSyncComplete);
+	}
+	
+	private function onSyncComplete(e:AEvent):void {
+		this.paper.getSyncData().length = 0;
 	}
 	
 	
@@ -48,27 +57,22 @@ public class TeacherBoard_StateUU extends StateUU {
 	
 	private var _imageLoader:ImageLoaderUU;
 	private var _imageA:ImageUU;
+	private var _remoteDrawing:ARemoteSharedObject;
 	
 	
 	private function ____onPress(e:ATouchEvent):void {
 		this.paper.startDraw(e.touch.rootX, e.touch.rootY);
+		
+		_remoteDrawing.getData()["A"] = this.paper.getSyncData().concat();
+		_remoteDrawing.setDirty("A");
 	}
 	
 	private function ____onMove(e:ATouchEvent):void {
 		if (e.touch.isPressed()) {
 			this.paper.drawLine(e.touch.rootX, e.touch.rootY, e.touch.prevRootX, e.touch.prevRootY);
 			
-			
-			var remote:ARemoteSharedObject;
-			
-			remote = RemoteManager.getInstance().getDrawing();
-			if (remote.getData()["A"] == null) {
-				remote.getData()["A"] = 1;
-			}
-			else {
-				remote.getData()["A"] += 1;
-			}
-			remote.setDirty("A");
+			_remoteDrawing.getData()["A"] = this.paper.getSyncData();
+			_remoteDrawing.setDirty("A");
 		}
 	}
 	

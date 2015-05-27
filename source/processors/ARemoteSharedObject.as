@@ -19,9 +19,9 @@ package processors
 	public class ARemoteSharedObject extends Notifier implements IPostUpdater
 	{
 		
-		public function ARemoteSharedObject( name:String ) 
+		public function ARemoteSharedObject( name:String, persistence:Object ) 
 		{
-			_sharedObject = SharedObject.getRemote(name, ConnectManager.getInstance().getNetConnect().uri, false);
+			_sharedObject = SharedObject.getRemote(name, ConnectManager.getInstance().getNetConnect().uri, persistence);
 			_sharedObject.connect(ConnectManager.getInstance().getNetConnect());
 			_sharedObject.addEventListener(SyncEvent.SYNC, onSync);
 		}
@@ -60,10 +60,16 @@ package processors
 			var propertyName:String;
 			
 			for each(propertyName in _dirtyMap) {
+				if (_sharedObject.data[propertyName] as Array) {
+					_sharedObject.data[propertyName] = (_sharedObject.data[propertyName] as Array).concat();
+				}
 				_sharedObject.setDirty( propertyName );
 				delete _dirtyMap[propertyName];
 			}
+			
 			_isPostUpdating = false;
+			
+			this.dispatchDirectEvent(AEvent.COMPLETE);
 		}
 		
 		private function onSync(e:SyncEvent):void {

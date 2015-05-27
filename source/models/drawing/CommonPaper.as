@@ -143,15 +143,29 @@ public class CommonPaper extends PaperBase implements ITicker {
 		return m_brushList[index] = new EraseBrush(m_contentRatio, m_fitRatio, density, m_content, source)
 	}
 	
-	public function startDraw( destX:Number, destY:Number ) : Boolean {
+	public function isRecord( b:Boolean ) : void {
+		_isRecord = b;
+	}
+	
+	public function isSync( b:Boolean ) : void {
+		_isSync = b;
+	}
+	
+	public function getSyncData() : Array {
+		return  _syncData;
+	}
+	
+	public function startDraw( destX:Number, destY:Number ) : void {
 		var brushType:int
 		
-		if(m_isDrawing){
-			return false
-		}
+		//if(m_isDrawing){
+			//return false
+		//}
+		
 		m_isDrawing = true
-		m_bytesA.writeByte(0) // type
-		m_bytesA.writeShort(m_brushIndex) // brush index
+		
+		//m_bytesA.writeByte(0) // type
+		//m_bytesA.writeShort(m_brushIndex) // brush index
 		if(m_currBrush is EraseBrush){
 			brushType = 1
 		}
@@ -161,31 +175,35 @@ public class CommonPaper extends PaperBase implements ITicker {
 		else if(m_currBrush is TransformationBrush){
 			brushType = 3
 		}
-		m_bytesA.writeByte(brushType)
-		m_bytesA.writeShort(int(m_currBrush.m_density * 100.0))
-		m_bytesA.writeShort(int(m_currBrush.m_scale * 100.0))
+		//m_bytesA.writeByte(brushType)
+		//m_bytesA.writeShort(int(m_currBrush.m_density * 100.0))
+		//m_bytesA.writeShort(int(m_currBrush.m_scale * 100.0))
 		if(brushType > 1){
-			m_bytesA.writeUnsignedInt(m_currBrush.m_color)
-			m_bytesA.writeShort(int(m_currBrush.m_alpha * 100.0))
+			//m_bytesA.writeUnsignedInt(m_currBrush.m_color)
+			//m_bytesA.writeShort(int(m_currBrush.m_alpha * 100.0))
 			if (brushType == 3) {
 				cachedAngle = Math.random() * cachedTwoPI
-				m_bytesA.writeShort(int(cachedAngle * 1000.0))
+				//m_bytesA.writeShort(int(cachedAngle * 1000.0))
 			}
 		}
 		destX = int(destX * 10.0)
 		destY = int(destY * 10.0)
-		m_bytesA.writeShort(destX)
-		m_bytesA.writeShort(destY)
-		m_bytesA.writeInt(m_currTime + (++m_count))
-		m_currBrush.drawPoint(destX * m_contentRatio * .1, destY * m_contentRatio * .1)
-		return true
+		//m_bytesA.writeShort(destX)
+		//m_bytesA.writeShort(destY)
+		//m_bytesA.writeInt(m_currTime + (++m_count))
+		m_currBrush.drawPoint(destX * m_contentRatio * .1, destY * m_contentRatio * .1);
+		
+		// [ type, brushIndex, brushType, density, scale, color, alpha, angle, destX, destY ]
+		if (_isSync) {
+			_syncData.push.apply(null, [0, brushIndex, brushType, m_currBrush.m_density, m_currBrush.m_scale, m_currBrush.m_color, m_currBrush.m_alpha, cachedAngle, destX, destY, 0, 0]);
+		}
 	}
 	
 	public function drawLine( currX:Number, currY:Number, prevX:Number, prevY:Number ) : void {
 		var brushType:int
 		
-		m_bytesA.writeByte(1) // type
-		m_bytesA.writeShort(brushIndex) // brush index
+		//m_bytesA.writeByte(1) // type
+		//m_bytesA.writeShort(brushIndex) // brush index
 		if(m_currBrush is EraseBrush){
 			brushType = 1
 		}
@@ -195,27 +213,32 @@ public class CommonPaper extends PaperBase implements ITicker {
 		else if(m_currBrush is TransformationBrush){
 			brushType = 3
 		}
-		m_bytesA.writeByte(brushType)
-		m_bytesA.writeShort(int(m_currBrush.m_density * 100.0))
-		m_bytesA.writeShort(int(m_currBrush.m_scale * 100.0))
+		//m_bytesA.writeByte(brushType)
+		//m_bytesA.writeShort(int(m_currBrush.m_density * 100.0))
+		//m_bytesA.writeShort(int(m_currBrush.m_scale * 100.0))
 		if(brushType > 1){
-			m_bytesA.writeUnsignedInt(m_currBrush.m_color)
-			m_bytesA.writeShort(int(m_currBrush.m_alpha * 100.0))
+			//m_bytesA.writeUnsignedInt(m_currBrush.m_color)
+			//m_bytesA.writeShort(int(m_currBrush.m_alpha * 100.0))
 			if (brushType == 3) {
 				cachedAngle = Math.random() * cachedTwoPI
-				m_bytesA.writeShort(int(cachedAngle * 1000.0))
+				//m_bytesA.writeShort(int(cachedAngle * 1000.0))
 			}
 		}
 		currX = int(currX * 10.0)
 		currY = int(currY * 10.0)
 		prevX = int(prevX * 10.0)
 		prevY = int(prevY * 10.0)
-		m_bytesA.writeShort(currX)
-		m_bytesA.writeShort(currY)
-		m_bytesA.writeShort(prevX)
-		m_bytesA.writeShort(prevY)
-		m_bytesA.writeInt(m_currTime + (++m_count))
+		//m_bytesA.writeShort(currX)
+		//m_bytesA.writeShort(currY)
+		//m_bytesA.writeShort(prevX)
+		//m_bytesA.writeShort(prevY)
+		//m_bytesA.writeInt(m_currTime + (++m_count))
 		m_currBrush.drawLine(currX * m_contentRatio * .1, currY * m_contentRatio * .1, prevX * m_contentRatio * .1, prevY * m_contentRatio * .1)
+		
+		// [ type, brushIndex, brushType, density, scale, color, alpha, angle, currX, currY, prevX, prevY ]
+		if (_isSync) {
+			_syncData.push.apply(null, [1, brushIndex, brushType, m_currBrush.m_density, m_currBrush.m_scale, m_currBrush.m_color, m_currBrush.m_alpha, cachedAngle, currX, currY, prevX, prevY]);
+		}
 	}
 	
 	/** -1[ none ]...0[ position ]...1[ position ]...2[ position ]...3[ position ]... */
@@ -304,5 +327,9 @@ public class CommonPaper extends PaperBase implements ITicker {
 	
 	agony_internal var m_currTime:int, m_count:int
 	agony_internal var m_bytesA:ByteArray // action buffer bytes...
+	
+	private var _isRecord:Boolean;
+	private var _isSync:Boolean;
+	private var _syncData:Array = [];
 }
 }

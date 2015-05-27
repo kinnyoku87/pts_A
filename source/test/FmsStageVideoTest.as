@@ -7,9 +7,12 @@ package test
 	import flash.events.NetDataEvent;
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.events.StageVideoEvent;
+	import flash.geom.Rectangle;
 	import flash.media.Camera;
 	import flash.media.Microphone;
 	import flash.media.SoundTransform;
+	import flash.media.StageVideo;
 	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
@@ -19,7 +22,7 @@ package test
 	import org.agony2d.crossing.DesktopPlatform;
 	import org.agony2d.events.AKeyboardEvent;
 	
-	public class FmsVideoTest extends Sprite 
+	public class FmsStageVideoTest extends Sprite 
 	{
 		public var nc_A:NetConnection;
 		public var ns_A:NetStream;
@@ -35,7 +38,11 @@ package test
 		
 		public var adapter:Adapter;
 		
-		public function FmsVideoTest() 
+		public var stageVideo:StageVideo;
+		
+		
+		
+		public function FmsStageVideoTest() 
 		{
 			this.nc_A = new NetConnection;
 			this.nc_A.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus_nc);
@@ -71,8 +78,17 @@ package test
 			
 		}
 		
+		private function onRenderState(e:StageVideoEvent):void {
+			trace("onRenderState", e.status);
+		}
+		
 		private function ____doStartPlay():void {
 			this.ns_A = new NetStream(this.nc_A);
+			
+			stageVideo = stage.stageVideos[0];
+			stageVideo.addEventListener(StageVideoEvent.RENDER_STATE, onRenderState);
+			stageVideo.attachNetStream(ns_A);
+			stageVideo.viewPort = new Rectangle(0, 0, 320, 240);
 			
 			//this.ns_A = new NetStream(this.nc_A);
 			ns_A.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus_ns);
@@ -85,14 +101,15 @@ package test
 			ns_A.client = this.client;
 			ns_A.play("mp4:AAA.f4v");
 			//ns_A.play("raw:AAA");
-			this.video_A = new Video(320, 240);
-			this.addChild(this.video_A);
+			
+			//this.video_A = new Video(320, 240);
+			//this.addChild(this.video_A);
 			
 			var st:SoundTransform = new SoundTransform;
 			st.volume = 80;
 			ns_A.soundTransform = st;
 			
-			this.video_A.attachNetStream(this.ns_A);
+			//this.video_A.attachNetStream(this.ns_A);
 			
 			this.adapter.getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, onKeyDown);
 			
