@@ -17,51 +17,14 @@ package {
 	import views.UU.startup.InitRes_StateUU;
 	import views.UU.startup.Startup_StateUU;
 	
-public class Initializer_web_board_student implements IInitializer {
+public class Initializer_web_board_student extends InitializerBase {
 	
-	private var _adapter:Adapter;
-	private var _rootUU:RootUU;
-	
-	public function onInit( stage:Stage ) : void {
-		this._adapter = Agony.createAdapter(stage);
-		this._adapter.getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, ____onKeyboardForDebug);
+	override protected function registerViews() : void {
+		super.registerViews();
 		
-		ResMachine.activate(AtlasAssetConvert);
-		
-		UUFacade.registerView("startup", Startup_StateUU);
-		UUFacade.registerView("initRes", InitRes_StateUU);
 		// room
 		UUFacade.registerView("board",   StudentBoard_StateUU);
-		if (ConfigV.videoEnabled) {
-			UUFacade.registerView("video",   StudentVideo_StateUU);
-		}
-		
-		_rootUU = UUFacade.createRoot(this._adapter);
-		
-		ConnectManager.getInstance().addEventListener(AEvent.COMPLETE, onConnected);
-		ConnectManager.getInstance().connect();
-	}
-	
-	private function onConnected(e:AEvent):void {
-		var viewIdList:Array;
-		
-		ConnectManager.getInstance().removeEventListener(AEvent.COMPLETE, onConnected);
-		
-		_rootUU.getView("startup").activate();
-		
-		viewIdList = [];
-		viewIdList.push("board");
-		if (ConfigV.videoEnabled) {
-			viewIdList.push("video");
-		}
-		_rootUU.getView("initRes").activate(viewIdList);
-	}
-	
-	
-	private function ____onKeyboardForDebug(e:AKeyboardEvent):void {
-		if (e.keyCode == Keyboard.G) {
-			gc();
-		}
+		UUFacade.registerView("video",   StudentVideo_StateUU);
 	}
 }
 }

@@ -64,7 +64,7 @@ public class StudentBoard_StateUU extends StateUU {
 			return;
 		}
 		AY = _drawingRemote.getData()["A"];
-		Agony.getLog().simplify("student: " + AY.length / 12);
+		//Agony.getLog().simplify("student: " + AY.length / 12);
 		
 		this._player.drawData(AY);
 	}

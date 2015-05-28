@@ -86,7 +86,7 @@ public class TeacherBoard_StateUU extends StateUU {
 			_drawingRemote.setDirty("A");
 			
 			_syncCompleted = false
-			Agony.getLog().simplify("teacher: " + AY.length / 12);
+			//Agony.getLog().simplify("teacher: " + AY.length / 12);
 		}
 	}
 	
