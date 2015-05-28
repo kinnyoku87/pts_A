@@ -66,12 +66,12 @@ package test
 			_sharedObject.connect(nc_A);
 			_sharedObject.addEventListener(SyncEvent.SYNC, onSync);
 			
-			_sharedObject.data["A"] = 1;
-			_sharedObject.setDirty("A");
-			_sharedObject.data["A"] = 2;
-			_sharedObject.setDirty("A");
-			_sharedObject.data["A"] = 3;
-			_sharedObject.data["A"] = 4;
+			//_sharedObject.data["A"] = 1;
+			//_sharedObject.setDirty("A");
+			//_sharedObject.data["A"] = 2;
+			//_sharedObject.setDirty("A");
+			//_sharedObject.data["A"] = 3;
+			//_sharedObject.data["A"] = 4;
 			
 			Agony.startup(1111, 1111, new DesktopPlatform, stage, null);
 			
@@ -84,12 +84,9 @@ package test
 					_sharedObject.data["A"] = 1;
 				}
 				else {
-					_sharedObject.data["A"]++;
+					_sharedObject.data["A"] = 1;
 				}
 				_sharedObject.setDirty("A");
-				_sharedObject.data["A"]--;
-				_sharedObject.setDirty("A");
-				_sharedObject.data["A"]--;
 			}
 		}
 		

@@ -26,11 +26,11 @@ public class StudentBoard_StateUU extends StateUU {
 		var BA:BitmapData;
 		
 		_drawingRemote = RemoteManager.getInstance().getDrawing();
-		_drawingRemote.addEventListener(ASyncEvent.SYNC, onSync);
 		
-		this.paper = DrawingManager.getInstance().paper;
-		//this.paper.currBrush.color = 0x0;
-		this.paper.reset();
+		_paper = DrawingManager.getInstance().paper;
+		_paper.reset();
+		
+		_player = new DrawingPlayer2(_paper);
 		
 		// 白板背景图片
 		_imageLoader = new ImageLoaderUU;
@@ -42,36 +42,20 @@ public class StudentBoard_StateUU extends StateUU {
 		this.getFusion().addNode(_imageA);
 		_imageA.textureId = "currWhiteBoard";
 		
-		_player = new DrawingPlayer2(paper);
-		//this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.PRESS,   ____onPress, 100000);
-		//this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.MOVE,    ____onMove, 100000);
-		//this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.RELEASE, ____onRelease, 100000);
-		
-		//this.getRoot().getAdapter().getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, onKeyDown);
+		// event listeners
+		this.getFusion().insertEventListener(_drawingRemote, ASyncEvent.SYNC, onSync);
 	}
 	
 	
-	public var paper:CommonPaper;
+	
+	public var _paper:CommonPaper;
 	private var _player:DrawingPlayer2;
 	
 	private var _imageLoader:ImageLoaderUU;
 	private var _imageA:ImageUU;
-	
-	
-	private function ____onPress(e:ATouchEvent):void {
-		this.paper.startDraw(e.touch.rootX, e.touch.rootY);
-	}
-	
-	private function ____onMove(e:ATouchEvent):void {
-		if (e.touch.isPressed()) {
-			this.paper.drawLine(e.touch.rootX, e.touch.rootY, e.touch.prevRootX, e.touch.prevRootY);
-			
-			
-			
-		}
-	}
-	
 	private var _drawingRemote:ARemoteSharedObject;
+	
+	
 	
 	private function onSync(e:ASyncEvent):void {
 		var AY:Array;
@@ -82,42 +66,7 @@ public class StudentBoard_StateUU extends StateUU {
 		AY = _drawingRemote.getData()["A"];
 		Agony.getLog().simplify("student: " + AY.length / 12);
 		
-		//if (!_drawingRemote.getData()["B"]) {
-			//_drawingRemote.getData()["B"] = 1;
-		//}
-		//else {
-			//_drawingRemote.getData()["B"]++;
-		//}
-		//_drawingRemote.setDirty("B");
-		
 		this._player.drawData(AY);
-	}
-	
-	private function ____onRelease(e:ATouchEvent):void {
-		this.paper.endDraw();
-	}
-	
-	private function onKeyDown(e:AKeyboardEvent):void {
-		switch(e.keyCode) {
-			case Keyboard.NUMBER_1:
-				this.paper.brushIndex = 0;
-				break;
-			case Keyboard.NUMBER_2:
-				this.paper.brushIndex = 1;
-				break;
-			case Keyboard.NUMBER_3:
-				this.paper.brushIndex = 2;
-				break;
-			case Keyboard.NUMBER_4:
-				this.paper.brushIndex = 3;
-				break;
-			case Keyboard.NUMBER_5:
-				this.paper.brushIndex = 4;
-				break;
-			case Keyboard.NUMBER_6:
-				this.paper.brushIndex = 5;
-				break;
-		}
 	}
 }
 }

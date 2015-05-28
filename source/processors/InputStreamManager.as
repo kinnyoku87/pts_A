@@ -1,5 +1,4 @@
-package processors 
-{
+package processors {
 	import flash.events.Event;
 	import flash.media.SoundTransform;
 	import flash.net.NetStream;
@@ -7,13 +6,7 @@ package processors
 	import flash.events.NetStatusEvent;
 	
 	// 输入流管理器，录制视频音频等.
-public class InputStreamManager 
-{
-	
-	public function InputStreamManager() 
-	{
-		
-	}
+public class InputStreamManager {
 	
 	private static var _instance:InputStreamManager;
 	public static function getInstance() : InputStreamManager {

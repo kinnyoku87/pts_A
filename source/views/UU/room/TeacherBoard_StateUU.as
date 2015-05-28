@@ -27,9 +27,10 @@ public class TeacherBoard_StateUU extends StateUU {
 		var textureUU:TextureUU;
 		var BA:BitmapData;
 		
-		this.paper = DrawingManager.getInstance().paper;
-		//this.paper.currBrush.color = 0x0;
-		this.paper.reset();
+		_drawingRemote = RemoteManager.getInstance().getDrawing();
+		
+		_paper = DrawingManager.getInstance().paper;
+		_paper.reset();
 		
 		// 白板背景图片
 		_imageLoader = new ImageLoaderUU;
@@ -41,21 +42,16 @@ public class TeacherBoard_StateUU extends StateUU {
 		this.getFusion().addNode(_imageA);
 		_imageA.textureId = "currWhiteBoard";
 		
-		this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.PRESS,   ____onPress, 100000);
-		this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.MOVE,    ____onMove, 100000);
-		this.getRoot().getAdapter().getTouch().addEventListener(ATouchEvent.RELEASE, ____onRelease, 100000);
-		
-		this.getRoot().getAdapter().getKeyboard().addEventListener(AKeyboardEvent.KEY_DOWN, onKeyDown);
-		
-		_drawingRemote = RemoteManager.getInstance().getDrawing();
-		_drawingRemote.addEventListener(ASyncEvent.SYNC, onSync);
-		
-		Agony.getFrame().addEventListener(TickEvent.TICKING, onTicking);
+		// event listener
+		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.PRESS,   ____onPress,   100000);
+		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.MOVE,    ____onMove,    100000);
+		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.RELEASE, ____onRelease, 100000);
+		this.getFusion().insertEventListener(this.getRoot().getAdapter().getKeyboard(), AKeyboardEvent.KEY_DOWN, onKeyDown);
+		this.getFusion().insertEventListener(_drawingRemote, ASyncEvent.SYNC, onSync);
+		this.getFusion().insertEventListener(Agony.getFrame(), TickEvent.TICKING, onTicking);
 	}
 	
 	private function onSync(e:ASyncEvent):void {
-		//Agony.getLog().simplify("teacher onSyncComplete: " + this.paper.getSyncData().length / 12);
-		
 		_syncCompleted = true;
 	}
 	
@@ -68,7 +64,8 @@ public class TeacherBoard_StateUU extends StateUU {
 	}
 	
 	
-	public var paper:CommonPaper;
+	
+	private var _paper:CommonPaper;
 	
 	private var _imageLoader:ImageLoaderUU;
 	private var _imageA:ImageUU;
@@ -80,11 +77,8 @@ public class TeacherBoard_StateUU extends StateUU {
 	
 	
 	
-	
 	private function ____doFlush() : void {
 		var AY:Array;
-		
-		//Agony.getLog().simplify("doFlush: " + _actionsList.length);
 		
 		if (_actionsList.length > 0) {
 			AY = _actionsList.shift();
@@ -101,12 +95,12 @@ public class TeacherBoard_StateUU extends StateUU {
 			_currActions = [];
 			_actionsList.push(_currActions);
 		}
-		_currActions.push.apply(null, this.paper.getSyncData());
-		this.paper.getSyncData().length = 0;
+		_currActions.push.apply(null, _paper.getSyncData());
+		_paper.getSyncData().length = 0;
 	}
 	
 	private function ____onPress(e:ATouchEvent):void {
-		this.paper.startDraw(e.touch.rootX, e.touch.rootY);
+		_paper.startDraw(e.touch.rootX, e.touch.rootY);
 		
 		this.____doCheckNewActions();
 		
@@ -114,35 +108,35 @@ public class TeacherBoard_StateUU extends StateUU {
 	
 	private function ____onMove(e:ATouchEvent):void {
 		if (e.touch.isPressed()) {
-			this.paper.drawLine(e.touch.rootX, e.touch.rootY, e.touch.prevRootX, e.touch.prevRootY);
+			_paper.drawLine(e.touch.rootX, e.touch.rootY, e.touch.prevRootX, e.touch.prevRootY);
 			
 			this.____doCheckNewActions();
 		}
 	}
 	
 	private function ____onRelease(e:ATouchEvent):void {
-		this.paper.endDraw();
+		_paper.endDraw();
 	}
 	
 	private function onKeyDown(e:AKeyboardEvent):void {
 		switch(e.keyCode) {
 			case Keyboard.NUMBER_1:
-				this.paper.brushIndex = 0;
+				_paper.brushIndex = 0;
 				break;
 			case Keyboard.NUMBER_2:
-				this.paper.brushIndex = 1;
+				_paper.brushIndex = 1;
 				break;
 			case Keyboard.NUMBER_3:
-				this.paper.brushIndex = 2;
+				_paper.brushIndex = 2;
 				break;
 			case Keyboard.NUMBER_4:
-				this.paper.brushIndex = 3;
+				_paper.brushIndex = 3;
 				break;
 			case Keyboard.NUMBER_5:
-				this.paper.brushIndex = 4;
+				_paper.brushIndex = 4;
 				break;
 			case Keyboard.NUMBER_6:
-				this.paper.brushIndex = 5;
+				_paper.brushIndex = 5;
 				break;
 		}
 	}

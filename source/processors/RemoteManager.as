@@ -3,10 +3,14 @@ package processors {
 	/**
 	 * 远程共享管理器
 	 */
-public class RemoteManager 
-{
+public class RemoteManager {
 	
+	//////////////////////////
+	// shared object names
+	//////////////////////////
 	public static const DRAWING:String = "drawing";
+	
+	
 	
 	private static var _instance:RemoteManager;
 	public static function getInstance() : RemoteManager {
