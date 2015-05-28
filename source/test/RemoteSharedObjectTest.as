@@ -16,7 +16,7 @@ package test
 	import flash.net.SharedObject;
 	import flash.ui.Keyboard;
 	import org.agony2d.Agony;
-	import org.agony2d.crossing.DesktopPlatform;
+	import org.agony2d.core.DesktopPlatform;
 	import org.agony2d.events.AKeyboardEvent;
 	
 	public class RemoteSharedObjectTest extends Sprite

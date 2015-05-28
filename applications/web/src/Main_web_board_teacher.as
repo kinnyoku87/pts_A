@@ -2,7 +2,7 @@ package {
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import org.agony2d.Agony;
-	import org.agony2d.crossing.DesktopPlatform;
+	import org.agony2d.core.DesktopPlatform;
 	import org.agony2d.logging.DebugLogger;
 	import org.agony2d.logging.FlashTextLogger;
 	

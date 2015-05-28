@@ -2,8 +2,8 @@ package {
 	import flash.display.Stage;
 	import flash.ui.Keyboard;
 	import org.agony2d.Agony;
-	import org.agony2d.crossing.Adapter;
-	import org.agony2d.crossing.IInitializer;
+	import org.agony2d.core.Adapter;
+	import org.agony2d.core.IInitializer;
 	import org.agony2d.events.AEvent;
 	import org.agony2d.events.AKeyboardEvent;
 	import org.agony2d.flashApi.RootUU;
