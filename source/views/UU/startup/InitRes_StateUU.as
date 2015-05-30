@@ -22,7 +22,7 @@ public class InitRes_StateUU extends StateUU {
 		this.resA = new ResMachine("common/");
 		
 		// swf
-		this.resA.addBundle(new FilesBundle("temp/swf/swfRes.swf"));
+		//this.resA.addBundle(new FilesBundle("temp/swf/swfRes.swf"));
 		
 		// image
 		this.resA.addBundle(new ZipBundle("demo.zip"), new TextureUU_BundleHandler);

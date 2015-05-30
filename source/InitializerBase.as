@@ -1,5 +1,6 @@
 package {
 	import flash.display.Stage;
+	import flash.system.Security;
 	import flash.ui.Keyboard;
 	import org.agony2d.Agony;
 	import org.agony2d.core.Adapter;
@@ -24,6 +25,8 @@ public class InitializerBase implements IInitializer {
 	private var _viewIdList:Array;
 	
 	public function onInit( stage:Stage ) : void {
+//		Security.allowDomain("*");
+		
 		this._adapter = Agony.createAdapter(stage);
 		
 		ResMachine.activate(AtlasAssetConvert);

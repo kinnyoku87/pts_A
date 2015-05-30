@@ -2,7 +2,7 @@ package models.drawing.supportClasses {
 	import flash.display.BitmapData;
 	
 	import org.agony2d.base.inside.agony_internal;
-	import org.agony2d.utils.MathUtil;
+	import org.agony2d.utils.AMath;
 	
 	use namespace agony_internal;
 	
@@ -27,7 +27,7 @@ public class TransformationBrush extends BrushBase {
 		var data:BitmapData
 		var tmpScale:Number
 		
-		tmpScale = ((m_appendScaleLow != 0 || m_appendScaleHigh != 0) ? (m_scale + MathUtil.getRandomBetween(m_appendScaleLow, m_appendScaleHigh)) : m_scale) * m_fitRatio
+		tmpScale = ((m_appendScaleLow != 0 || m_appendScaleHigh != 0) ? (m_scale + AMath.random(m_appendScaleLow, m_appendScaleHigh)) : m_scale) * m_fitRatio
 		data = m_dataList[int(m_length * Math.random())]
 		cachedMatrix.identity()
 		cachedMatrix.translate(-data.width * .5, -data.height * .5)
