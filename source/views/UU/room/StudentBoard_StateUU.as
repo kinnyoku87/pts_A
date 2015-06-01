@@ -25,7 +25,7 @@ public class StudentBoard_StateUU extends StateUU {
 		var textureUU:TextureUU;
 		var BA:BitmapData;
 		
-		_drawingRemote = RemoteManager.getInstance().getDrawing();
+		this.doInitDrawingRemote();
 		
 		_paper = DrawingManager.getInstance().paper;
 		_paper.reset();
@@ -42,8 +42,6 @@ public class StudentBoard_StateUU extends StateUU {
 		this.getFusion().addNode(_imageA);
 		_imageA.textureId = "currWhiteBoard";
 		
-		// event listeners
-		this.getFusion().insertEventListener(_drawingRemote, ASyncEvent.SYNC, onSync);
 	}
 	
 	
@@ -53,17 +51,31 @@ public class StudentBoard_StateUU extends StateUU {
 	
 	private var _imageLoader:ImageLoaderUU;
 	private var _imageA:ImageUU;
-	private var _drawingRemote:ARemoteSharedObject;
 	
 	
+	private function doInitDrawingRemote() : void {
+		var drawingList:Vector.<ARemoteSharedObject>;
+		var remote_A:ARemoteSharedObject;
+		var i:int;
+		var l:int;
+		
+		drawingList = RemoteManager.getInstance().getDrawingList();
+		l = drawingList.length;
+		while (i < l) {
+			remote_A = drawingList[i++];
+			this.getFusion().insertEventListener(remote_A, ASyncEvent.SYNC, onSync);
+		}
+	}
 	
 	private function onSync(e:ASyncEvent):void {
 		var AY:Array;
+		var remote_A:ARemoteSharedObject;
 		
-		if (!_drawingRemote.getData()["A"]) {
+		remote_A = e.target as ARemoteSharedObject;
+		if (!remote_A.getData()["A"]) {
 			return;
 		}
-		AY = _drawingRemote.getData()["A"];
+		AY = remote_A.getData()["A"];
 		//Agony.getLog().simplify("student: " + AY.length / 12);
 		
 		this._player.drawData(AY);

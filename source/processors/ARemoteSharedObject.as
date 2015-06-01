@@ -21,6 +21,7 @@ package processors {
 			_sharedObject.addEventListener(SyncEvent.SYNC, onSync);
 		}
 		
+		public var isReady:Boolean;
 		
 		public function getData() : Object {
 			return _sharedObject.data;
@@ -28,6 +29,7 @@ package processors {
 		
 		public function setDirty( propertyName:String ) : void {
 			_sharedObject.setDirty( propertyName );
+			isReady = false;
 		}
 		
 		
@@ -39,6 +41,7 @@ package processors {
 		
 		
 		private function onSync(e:SyncEvent):void {
+			isReady = true;
 			_syncEvent.changeList = e.changeList;
 			this.dispatchEvent(_syncEvent);
 		}

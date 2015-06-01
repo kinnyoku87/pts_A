@@ -27,7 +27,7 @@ public class TeacherBoard_StateUU extends StateUU {
 		var textureUU:TextureUU;
 		var BA:BitmapData;
 		
-		_drawingRemote = RemoteManager.getInstance().getDrawing();
+		this.doInitDrawingRemote();
 		
 		_paper = DrawingManager.getInstance().paper;
 		_paper.reset();
@@ -47,20 +47,35 @@ public class TeacherBoard_StateUU extends StateUU {
 		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.MOVE,    ____onMove,    100000);
 		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.RELEASE, ____onRelease, 100000);
 		//this.getFusion().insertEventListener(this.getRoot().getAdapter().getKeyboard(), AKeyboardEvent.KEY_DOWN, onKeyDown);
-		this.getFusion().insertEventListener(_drawingRemote, ASyncEvent.SYNC, onSync);
+		
 		this.getFusion().insertEventListener(Agony.getFrame(), TickEvent.TICKING, onTicking);
 	}
 	
-	private function onSync(e:ASyncEvent):void {
-		_syncCompleted = true;
+	private function doInitDrawingRemote() : void {
+		var drawingList:Vector.<ARemoteSharedObject>;
+		var remote_A:ARemoteSharedObject;
+		var i:int;
+		var l:int;
+		
+		drawingList = RemoteManager.getInstance().getDrawingList();
+		//l = drawingList.length;
+		//while (i < l) {
+			//remote_A = drawingList[i++];
+			//this.getFusion().insertEventListener(remote_A, ASyncEvent.SYNC, onSync);
+		//}
 	}
 	
-	private function onTicking(e:TickEvent):void {
-		_currActions = null;
+	//private function onSync(e:ASyncEvent):void {
 		
-		if (_syncCompleted) {
-			this.____doFlush();
-		}
+	//}
+	
+	private function onTicking(e:TickEvent):void {
+		//trace(_actionsList.length);
+		
+		_currActions = null;
+		this.____doCheckAndFlush();
+		
+		//trace(_actionsList.length);
 	}
 	
 	
@@ -69,23 +84,25 @@ public class TeacherBoard_StateUU extends StateUU {
 	
 	private var _imageLoader:ImageLoaderUU;
 	private var _imageA:ImageUU;
-	private var _drawingRemote:ARemoteSharedObject;
 	
 	private var _actionsList:Array = []; // 动作列表
-	private var _currActions:Array; // 当前动作
-	private var _syncCompleted:Boolean = true;
+	private var _currActions:Array; // 当前帧的记录动作
 	
 	
 	
-	private function ____doFlush() : void {
+	private function ____doCheckAndFlush() : void {
 		var AY:Array;
+		var remote_A:ARemoteSharedObject;
 		
 		if (_actionsList.length > 0) {
-			AY = _actionsList.shift();
-			_drawingRemote.getData()["A"] = AY;
-			_drawingRemote.setDirty("A");
+			remote_A = RemoteManager.getInstance().getIdleDrawing();
+			if (remote_A) {
+				AY = _actionsList.shift();
+				remote_A.getData()["A"] = AY;
+				remote_A.setDirty("A");
+				this.____doCheckAndFlush();
+			}
 			
-			_syncCompleted = false
 			//Agony.getLog().simplify("teacher: " + AY.length / 12);
 		}
 	}
