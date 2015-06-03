@@ -8,47 +8,71 @@ package views.UU.room {
 	import flash.display.BitmapData;
 	import flash.display.Shape;
 	import org.agony2d.Agony;
+	import org.agony2d.events.AdapterEvent;
 	import org.agony2d.events.AEvent;
 	import org.agony2d.events.AKeyboardEvent;
 	import org.agony2d.events.ATouchEvent;
 	import org.agony2d.events.TickEvent;
+	import org.agony2d.flashApi.FusionUU;
 	import org.agony2d.flashApi.ImageUU;
+	import org.agony2d.flashApi.StateFusionUU;
 	import org.agony2d.flashApi.StateUU;
 	import org.agony2d.flashApi.ImageLoaderUU;
-	import org.agony2d.flashApi.MultiStateUU;
 	import org.agony2d.flashApi.textures.TextureUU;
 	import org.agony2d.flashApi.UUFacade;
 	import processors.ARemoteSharedObject;
 	import processors.RemoteManager;
+	import views.ConfigV;
 	
 public class TeacherBoard_StateUU extends StateUU {
 	
-	override public function onEnter() :void {
+	override public function onEnter() : void {
 		var textureUU:TextureUU;
 		var BA:BitmapData;
+		
+		this.getFusion().spaceHeight = this.getRoot().getAdapter().rootHeight;
 		
 		this.doInitDrawingRemote();
 		
 		_paper = DrawingManager.getInstance().paper;
 		_paper.reset();
 		
+		_boardFusion = new FusionUU;
+		this.getFusion().addNode(_boardFusion);
+		_boardFusion.touchable = false;
+		
 		// 白板背景图片
 		_imageLoader = new ImageLoaderUU;
-		this.getFusion().addNode(_imageLoader);
+		_boardFusion.addNode(_imageLoader);
 		_imageLoader.load("1.jpg", false);
 		
 		// 绘制图片
 		_imageA = new ImageUU;
-		this.getFusion().addNode(_imageA);
+		_boardFusion.addNode(_imageA);
 		_imageA.textureId = "currWhiteBoard";
 		
+		if (ConfigV.brushPanel) {
+			_fusionBottom = this.createStateFusion(Brush_StateUU);
+			_fusionBottom.x = -50;
+		}
+		
+		
 		// event listener
-		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.PRESS,   ____onPress,   100000);
-		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.MOVE,    ____onMove,    100000);
-		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.RELEASE, ____onRelease, 100000);
+		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.PRESS,   ____onPress,   100);
+		//this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.MOVE,    ____onMove,    100);
+		//this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.RELEASE, ____onRelease, 100);
 		//this.getFusion().insertEventListener(this.getRoot().getAdapter().getKeyboard(), AKeyboardEvent.KEY_DOWN, onKeyDown);
 		
 		this.getFusion().insertEventListener(Agony.getFrame(), TickEvent.TICKING, onTicking);
+		this.getFusion().insertEventListener(this.getRoot().getAdapter(), AdapterEvent.ROOT_RESIZE, onRootResize, 50);
+	}
+	
+	private var _fusionBottom:FusionUU;
+	private var _boardFusion:FusionUU;
+	
+	private function onRootResize(e:AdapterEvent):void {
+		this.getFusion().spaceHeight = this.getRoot().getAdapter().rootHeight;
+		//trace(this.getFusion().spaceHeight);
 	}
 	
 	private function doInitDrawingRemote() : void {
@@ -121,6 +145,8 @@ public class TeacherBoard_StateUU extends StateUU {
 		
 		this.____doCheckNewActions();
 		
+		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.MOVE,    ____onMove,    100000);
+		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.RELEASE, ____onRelease, 100000);
 	}
 	
 	private function ____onMove(e:ATouchEvent):void {
@@ -132,6 +158,9 @@ public class TeacherBoard_StateUU extends StateUU {
 	}
 	
 	private function ____onRelease(e:ATouchEvent):void {
+		this.getFusion().deleteEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.MOVE,    ____onMove);
+		this.getFusion().deleteEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.RELEASE, ____onRelease);
+		
 		_paper.endDraw();
 	}
 	

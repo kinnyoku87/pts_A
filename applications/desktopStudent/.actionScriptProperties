@@ -3,7 +3,7 @@
   <compiler additionalCompilerArguments="-locale en_US" advancedTelemetry="false" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderLocation="E:/bin-debug" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="D:/agony/agony2d-core/source/src"/>
-      <compilerSourcePathEntry kind="1" linkType="1" path="D:/agony/agony2d-display-v1.1.6/source/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="D:/agony/agony2d-display-v1.1.7/source/src"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="D:/agony/agony2d-ui/source/src"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="D:/agony/agony2d-ui/examples-ui"/>
       <compilerSourcePathEntry kind="1" linkType="1" path="D:/agony/派特森英语视频白板/source"/>

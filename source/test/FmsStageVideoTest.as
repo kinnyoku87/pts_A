@@ -7,7 +7,9 @@ package test
 	import flash.events.NetDataEvent;
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.events.StageVideoAvailabilityEvent;
 	import flash.events.StageVideoEvent;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.media.Camera;
 	import flash.media.Microphone;
@@ -50,6 +52,12 @@ package test
 			
 			Agony.startup(1024, 768, new DesktopPlatform, stage, null);
 			adapter = Agony.createAdapter(stage);
+			
+			this.stage.addEventListener(StageVideoAvailabilityEvent.STAGE_VIDEO_AVAILABILITY, onStageVideoAvail);
+		}
+		
+		private function onStageVideoAvail(e:StageVideoAvailabilityEvent):void {
+			trace(e);
 		}
 		
 		private function onSecurityError(e:SecurityErrorEvent):void {
@@ -89,6 +97,8 @@ package test
 			stageVideo.addEventListener(StageVideoEvent.RENDER_STATE, onRenderState);
 			stageVideo.attachNetStream(ns_A);
 			stageVideo.viewPort = new Rectangle(0, 0, 320, 240);
+			//stageVideo.zoom = new Point(2.0, 2.0);
+			//stageVideo.pan = new Point(1, 1);
 			
 			//this.ns_A = new NetStream(this.nc_A);
 			ns_A.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus_ns);
@@ -99,7 +109,7 @@ package test
 			// 这个client不加会报错！！待解..
 			this.client = new Object;
 			ns_A.client = this.client;
-			ns_A.play("mp4:AAA.f4v");
+			ns_A.play("BBB");
 			//ns_A.play("raw:AAA");
 			
 			//this.video_A = new Video(320, 240);
@@ -130,7 +140,7 @@ package test
 		}
 		
 		private function onEnterFrame(e:Event):void {
-			trace(ns_A.time, ns_A.bytesLoaded, ns_A.bytesTotal);
+			//trace(ns_A.time, ns_A.bytesLoaded, ns_A.bytesTotal);
 		}
 		
 		private function onKeyDown(e:AKeyboardEvent):void {
@@ -143,6 +153,16 @@ package test
 					break;
 				case Keyboard.O:
 					ns_A.seek(0);
+					break;
+				case Keyboard.Z:
+					stageVideo.zoom = (stageVideo.zoom.x == 1) ? new Point(2, 2) : new Point(1, 1);
+					trace(stageVideo.pan);
+					break;
+				case Keyboard.LEFT:
+					stageVideo.pan = new Point(stageVideo.pan.x - 0.1, stageVideo.pan.y);
+					break;
+				case Keyboard.RIGHT:
+					stageVideo.pan = new Point(stageVideo.pan.x + 0.1, stageVideo.pan.y);
 					break;
 			}
 		}

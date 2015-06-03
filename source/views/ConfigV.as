@@ -9,6 +9,7 @@ public class ConfigV
 	public static var videoEnabled:Boolean;
 	
 	
-	
+	public static var brushPanel:Boolean = true;
+	//public static var brushPanel:Boolean;
 }
 }

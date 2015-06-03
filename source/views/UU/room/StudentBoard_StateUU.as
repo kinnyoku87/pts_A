@@ -13,7 +13,6 @@ package views.UU.room {
 	import org.agony2d.flashApi.ImageUU;
 	import org.agony2d.flashApi.StateUU;
 	import org.agony2d.flashApi.ImageLoaderUU;
-	import org.agony2d.flashApi.MultiStateUU;
 	import org.agony2d.flashApi.textures.TextureUU;
 	import org.agony2d.flashApi.UUFacade;
 	import processors.ARemoteSharedObject;

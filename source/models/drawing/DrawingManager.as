@@ -40,21 +40,28 @@ public class DrawingManager
 //			bp.x = -bp.width / 2
 //			bp.y = -bp.height / 2
 		
+		// 0
+		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/crayon.png", TextureUU) as TextureUU).getBitmapData()], 0, 5, 0, 0, true)
 		
-		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/waterColor.png", TextureUU) as TextureUU).getBitmapData()], 0, 5,0,0,true);
-		
-		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/pencil.png", TextureUU) as TextureUU).getBitmapData()], 1, 2,0,0,true)
-		brush.scale = 0.7;
-		
-		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/crayon.png", TextureUU) as TextureUU).getBitmapData()], 2, 5,0,0,true)
-		brush = paper.createCopyPixelsBrush((UUFacade.getAsset("drawing/brush/pink.png", TextureUU) as TextureUU).getBitmapData(), 3, 3)
-		brush = paper.createCopyPixelsBrush((UUFacade.getAsset("drawing/brush/maker.png", TextureUU) as TextureUU).getBitmapData(), 4, 5)
-		brush.scale = 0.6
-		
-		brush = paper.createEraseBrush(eraser, 5, 8)
+		// 1
+		brush = paper.createEraseBrush(eraser, 1, 8)
 		brush.scale = 1.5;
 		
-		paper.brushIndex = 1;
+		// 2
+		brush = paper.createCopyPixelsBrush((UUFacade.getAsset("drawing/brush/maker.png", TextureUU) as TextureUU).getBitmapData(), 2, 5)
+		brush.scale = 0.6
+		
+		// 3
+		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/pencil.png", TextureUU) as TextureUU).getBitmapData()], 3, 2,0,0,true)
+		brush.scale = 0.7;
+		
+		// 4
+		brush = paper.createCopyPixelsBrush((UUFacade.getAsset("drawing/brush/pink.png", TextureUU) as TextureUU).getBitmapData(), 4, 3)
+		
+		// 5
+		brush = paper.createTransformationBrush([(UUFacade.getAsset("drawing/brush/waterColor.png", TextureUU) as TextureUU).getBitmapData()], 5, 5,0,0,true);
+		
+		//paper.brushIndex = 3;
 	}
 	
 	

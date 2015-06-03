@@ -9,6 +9,7 @@ package {
 	import org.agony2d.events.AKeyboardEvent;
 	import org.agony2d.flashApi.RootUU;
 	import org.agony2d.flashApi.UUFacade;
+	import org.agony2d.logging.FlashTextLogger;
 	import org.agony2d.resource.converters.AtlasAssetConvert;
 	import org.agony2d.resource.ResMachine;
 	import org.agony2d.utils.gc;
@@ -58,11 +59,17 @@ public class InitializerBase implements IInitializer {
 	}
 	
 	private function ____onKeyboardForDebug(e:AKeyboardEvent):void {
+		var logger:FlashTextLogger;
+		
 		if (e.keyCode == Keyboard.G) {
 			gc();
 		}
 		else if (e.keyCode == Keyboard.R) {
 			this.____activateViews();
+		}
+		else if (e.keyCode == Keyboard.L) {
+			logger = Agony.getLog().logger as FlashTextLogger;
+			logger.visible = !logger.visible;
 		}
 	}
 	
