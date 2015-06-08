@@ -3,7 +3,7 @@ package models.drawing.supportClasses {
 	import flash.geom.ColorTransform;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
-	import org.agony2d.base.inside.agony_internal;
+	import org.agony2d.core.inside.agony_internal;
 	use namespace agony_internal;
 public class DrawingBase {
 	

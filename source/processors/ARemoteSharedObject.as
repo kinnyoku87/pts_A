@@ -2,12 +2,12 @@ package processors {
 	import events.ASyncEvent;
 	import flash.events.SyncEvent;
 	import flash.net.SharedObject;
-	import org.agony2d.base.FrameManager;
-	import org.agony2d.base.IPostUpdater;
+	import org.agony2d.ticking.TickManager;
+	import org.agony2d.ticking.IPostUpdater;
 	import org.agony2d.events.AEvent;
 	import org.agony2d.events.Notifier;
 	
-	import org.agony2d.base.inside.agony_internal;
+	import org.agony2d.core.inside.agony_internal;
 	
 	use namespace agony_internal;
 	

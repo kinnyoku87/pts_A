@@ -50,7 +50,9 @@ public class InitializerBase implements IInitializer {
 		ConnectManager.getInstance().removeEventListener(AEvent.COMPLETE, onConnected);
 		
 		_viewIdList = [];
-		_viewIdList.push("board");
+		if (ConfigV.boardEnabled) {
+			_viewIdList.push("board");
+		}
 		if (ConfigV.videoEnabled) {
 			_viewIdList.push("video");
 		}

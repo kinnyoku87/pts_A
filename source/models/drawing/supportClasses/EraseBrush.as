@@ -3,7 +3,7 @@ package models.drawing.supportClasses {
 	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
-	import org.agony2d.base.inside.agony_internal;
+	import org.agony2d.core.inside.agony_internal;
 	use namespace agony_internal;
 final public class EraseBrush extends BrushBase {
 	

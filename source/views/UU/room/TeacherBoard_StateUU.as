@@ -63,7 +63,7 @@ public class TeacherBoard_StateUU extends StateUU {
 		//this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.RELEASE, ____onRelease, 100);
 		//this.getFusion().insertEventListener(this.getRoot().getAdapter().getKeyboard(), AKeyboardEvent.KEY_DOWN, onKeyDown);
 		
-		this.getFusion().insertEventListener(Agony.getFrame(), TickEvent.TICKING, onTicking);
+		this.getFusion().insertEventListener(Agony.getTick(), TickEvent.TICKING, onTicking);
 		this.getFusion().insertEventListener(this.getRoot().getAdapter(), AdapterEvent.ROOT_RESIZE, onRootResize, 50);
 	}
 	

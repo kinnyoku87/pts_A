@@ -5,7 +5,7 @@ package models.drawing {
 	import models.drawing.supportClasses.BrushBase;
 	import models.drawing.supportClasses.PaperBase;
 	
-	import org.agony2d.base.inside.agony_internal;
+	import org.agony2d.core.inside.agony_internal;
 	use namespace agony_internal;
 	
 public class DrawingPlayer2 extends PaperBase {

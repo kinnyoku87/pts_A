@@ -85,11 +85,12 @@ package test
 			
 			camera_A = Camera.getCamera();
 			camera_A.setMode(320, 240, 12);
-			camera_A.setQuality(0, 80);
+			camera_A.setQuality(0, 100);
+			//camera_A.
 			this.ns_A.attachCamera(camera_A);
 			
-			this.ns_A.publish("mp4:AAA.f4v", "live");
-			//this.ns_A.publish("mp4:AAA.f4v", "record");
+			//this.ns_A.publish("mp4:AAA.f4v", "live");
+			this.ns_A.publish("mp4:AAA.f4v", "record");
 			
 			video_A = new Video(320, 240);
 			video_A.attachCamera(camera_A);

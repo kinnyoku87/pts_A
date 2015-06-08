@@ -5,7 +5,7 @@ package models.drawing.supportClasses {
 	import org.agony2d.Agony;
 	
 	//import org.agony2d.debug.Logger;
-	import org.agony2d.base.inside.agony_internal;
+	import org.agony2d.core.inside.agony_internal;
 	use namespace agony_internal;
 public class CopyPixelsBrush extends BrushBase{
 	

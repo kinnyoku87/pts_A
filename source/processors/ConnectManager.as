@@ -1,5 +1,6 @@
 package processors {
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
 	import flash.net.NetConnection;
 	import flash.events.AsyncErrorEvent;
 	import flash.events.NetStatusEvent;
@@ -26,6 +27,7 @@ public class ConnectManager extends Notifier {
 		_ncA = new NetConnection;
 		_ncA.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus_nc);
 		_ncA.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onError);
+		_ncA.addEventListener(IOErrorEvent.IO_ERROR, onIoError);
 		_ncA.connect(ConfigP.fmsBaseURL);
 	}
 	
@@ -38,6 +40,8 @@ public class ConnectManager extends Notifier {
 	
 	
 	private var _ncA:NetConnection;
+	private var _reconnectTotal:int = 5;
+	
 	
 	
 	private function onNetStatus_nc(e:NetStatusEvent):void {
@@ -55,6 +59,12 @@ public class ConnectManager extends Notifier {
 	
 	private function onError(e:Event):void {
 		trace(e.type);
+	}
+	
+	private function onIoError(e:IOErrorEvent):void {
+		if (_reconnectTotal-- > 0) {
+			_ncA.connect(ConfigP.fmsBaseURL);
+		}
 	}
 }
 }

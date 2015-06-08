@@ -20,7 +20,7 @@ package views.UU.room
 		override public function onEnter() : void 
 		{
 			// Input
-			ns_input = InputStreamManager.getInstance().getNetStream();
+			/*ns_input = InputStreamManager.getInstance().getNetStream();
 			
 			mic_A = Microphone.getMicrophone();
 			mic_A.setSilenceLevel(0);
@@ -35,7 +35,7 @@ package views.UU.room
 			camera_A.setQuality(0, 80);
 			this.ns_input.attachCamera(camera_A);
 			
-			this.ns_input.publish("mp4:student.f4v", "record");
+			this.ns_input.publish("mp4:student.f4v", "record");*/
 			
 			// Output
 			ns_output = OutputStreamManager.getInstance().getNetStream();

@@ -15,7 +15,7 @@ package
 			var logger:FlashTextLogger;
 			
 			Agony.getLog().logger = logger = new FlashTextLogger(stage, false, 200, 400, 400);
-			//logger.visible = true;
+			logger.visible = true;
 			Agony.startup(1024, 600, new DesktopPlatform, stage, Initializer_web_board_student);
 		}
 	}

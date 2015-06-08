@@ -38,10 +38,23 @@ package views.UU.room
 			
 			this.ns_input.publish("mp4:teacher.f4v", "record");
 			
+			ns_output = OutputStreamManager.getInstance().getNetStream();
 			
+			_rawSprite = new RawSpriteUU;
+			this.getFusion().addNode(_rawSprite);
+			
+			this.video_A = new Video(320, 240);
+			_rawSprite.addChild(this.video_A);
+			
+			this.client = new Object;
+			ns_output.client = this.client;
+			ns_output.play("mp4:teacher.f4v");
+			
+			
+			this.video_A.attachNetStream(this.ns_output);
 			
 			// Output
-			ns_output = OutputStreamManager.getInstance().getNetStream();
+			/*ns_output = OutputStreamManager.getInstance().getNetStream();
 			
 			_rawSprite = new RawSpriteUU;
 			this.getFusion().addNode(_rawSprite);
@@ -54,7 +67,7 @@ package views.UU.room
 			ns_output.play("mp4:student.f4v");
 			
 			
-			this.video_A.attachNetStream(this.ns_output);
+			this.video_A.attachNetStream(this.ns_output);*/
 		}
 		
 		

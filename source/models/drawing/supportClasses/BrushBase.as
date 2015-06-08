@@ -7,7 +7,7 @@ package models.drawing.supportClasses {
 	
 	import models.drawing.IBrush;
 	
-	import org.agony2d.base.inside.agony_internal;
+	import org.agony2d.core.inside.agony_internal;
 	
 	use namespace agony_internal;
 

@@ -23,6 +23,7 @@ package test
 	import org.agony2d.core.Adapter;
 	import org.agony2d.core.DesktopPlatform;
 	import org.agony2d.events.AKeyboardEvent;
+	import org.agony2d.logging.FlashTextLogger;
 	
 	public class FmsStageVideoTest extends Sprite 
 	{
@@ -50,6 +51,10 @@ package test
 			this.nc_A.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus_nc);
 			this.nc_A.connect(fmsURL);
 			
+			var logger:FlashTextLogger;
+			
+			Agony.getLog().logger = logger = new FlashTextLogger(stage, false, 100);
+			logger.visible = true;
 			Agony.startup(1024, 768, new DesktopPlatform, stage, null);
 			adapter = Agony.createAdapter(stage);
 			
@@ -87,7 +92,7 @@ package test
 		}
 		
 		private function onRenderState(e:StageVideoEvent):void {
-			trace("onRenderState", e.status);
+			Agony.getLog().simplify("onRenderState: " + e.status);
 		}
 		
 		private function ____doStartPlay():void {
@@ -109,7 +114,8 @@ package test
 			// 这个client不加会报错！！待解..
 			this.client = new Object;
 			ns_A.client = this.client;
-			ns_A.play("BBB");
+			//ns_A.play("BBB");
+			ns_A.play("mp4:AAA.f4v");
 			//ns_A.play("raw:AAA");
 			
 			//this.video_A = new Video(320, 240);

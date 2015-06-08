@@ -4,7 +4,7 @@ package models.drawing {
 	import flash.display.IBitmapDrawable;
 	import flash.utils.ByteArray;
 	import org.agony2d.Agony;
-	import org.agony2d.base.ITicker;
+	import org.agony2d.ticking.ITicker;
 	
 	import models.drawing.supportClasses.BrushBase;
 	import models.drawing.supportClasses.CopyPixelsBrush;
@@ -12,8 +12,8 @@ package models.drawing {
 	import models.drawing.supportClasses.PaperBase;
 	import models.drawing.supportClasses.TransformationBrush;
 	
-	import org.agony2d.base.FrameManager;
-	import org.agony2d.base.inside.agony_internal;
+	import org.agony2d.ticking.TickManager;
+	import org.agony2d.core.inside.agony_internal;
 	
 	use namespace agony_internal;
 	
@@ -83,10 +83,10 @@ public class CommonPaper extends PaperBase implements ITicker {
 		}
 		m_isStarted = b
 		if(b){
-			Agony.getFrame().getTickGroup(null).doAddTicker(this)
+			Agony.getTick().getTickGroup(null).doAddTicker(this)
 		}
 		else{
-			Agony.getFrame().getTickGroup(null).doRemoveTicker(this)
+			Agony.getTick().getTickGroup(null).doRemoveTicker(this)
 		}
 	}
 	
