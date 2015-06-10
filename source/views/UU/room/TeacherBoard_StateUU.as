@@ -55,7 +55,9 @@ public class TeacherBoard_StateUU extends StateUU {
 			_fusionBottom = this.createStateFusion(Brush_StateUU);
 			_fusionBottom.x = -50;
 		}
-		
+		else {
+			DrawingManager.getInstance().paper.brushIndex = 3;
+		}
 		
 		// event listener
 		this.getFusion().insertEventListener(this.getRoot().getAdapter().getTouch(), ATouchEvent.PRESS,   ____onPress,   100);

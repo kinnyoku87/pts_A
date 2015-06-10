@@ -22,19 +22,19 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>[source path] agony2d-build-v.1.1.7-source-src</name>
+			<type>2</type>
+			<location>D:/agony_A/agony2d-build-v.1.1.7/source/src</location>
+		</link>
+		<link>
 			<name>[source path] agony2d-core-source-src</name>
 			<type>2</type>
-			<location>D:/agony/agony2d-core/source/src</location>
+			<location>D:/agony_A/agony2d-core/source/src</location>
 		</link>
 		<link>
-			<name>[source path] agony2d-display-v1.1.7-source-src</name>
+			<name>[source path] agony2d-drive-source-src</name>
 			<type>2</type>
-			<location>D:/agony/agony2d-display-v1.1.7/source/src</location>
-		</link>
-		<link>
-			<name>[source path] agony2d-ui-source-src</name>
-			<type>2</type>
-			<location>D:/agony/agony2d-ui/source/src</location>
+			<location>D:/agony_A/agony2d-drive/source/src</location>
 		</link>
 		<link>
 			<name>[source path] assets</name>
@@ -42,9 +42,14 @@
 			<location>D:/agony/派特森英语视频白板/assets</location>
 		</link>
 		<link>
-			<name>[source path] examples-ui</name>
+			<name>[source path] examples-build</name>
 			<type>2</type>
-			<location>D:/agony/agony2d-ui/examples-ui</location>
+			<location>D:/agony_A/agony2d-build-v.1.1.7/examples-build</location>
+		</link>
+		<link>
+			<name>[source path] examples-core</name>
+			<type>2</type>
+			<location>D:/agony_A/agony2d-core/examples-core</location>
 		</link>
 		<link>
 			<name>[source path] source</name>
